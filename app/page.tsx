@@ -30,7 +30,7 @@ export default function HomePage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm text-muted-foreground">Narração profissional para seus vídeos</span>
+              <span className="text-sm text-muted-foreground">Narração style para seus vídeos</span>
             </div>
 
             {/* Main Title */}
@@ -38,7 +38,7 @@ export default function HomePage() {
 
             {/* Description */}
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
-              Quer mostrar sua linha para o mundo e ainda por cima ter uma narração bem divertida estilo campeonato?
+              Quer mostrar sua linha para o mundo e ainda por cima ter uma narração style?
               Seja bem vindo!
             </p>
 
@@ -70,7 +70,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-lg font-semibold">Receba narração</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Nossa equipe cria uma narração divertida e profissional para suas manobras
+                  Nossa equipe cria uma narração style e profissional para suas manobras
                 </p>
               </div>
 

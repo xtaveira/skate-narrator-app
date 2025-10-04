@@ -7,8 +7,7 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Narrador do Skate",
-  description: "Envie seu vídeo e receba uma narração estilo campeonato!",
-  generator: "v0.app",
+  description: "Envie seu vídeo e receba uma narração style!",
 }
 
 export default function RootLayout({
