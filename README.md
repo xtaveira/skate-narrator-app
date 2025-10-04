@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Narrador do Skate
 
-## Getting Started
+Aplicação web para envio de vídeos de skate e recebimento de narrações profissionais.
 
-First, run the development server:
+## Tecnologias
 
-```bash
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS
+- Shadcn/ui
+- Google Sheets API
+- Sonner (Toast notifications)
+
+## Configuração
+
+### 1. Instalar dependências
+
+\`\`\`bash
+npm install
+\`\`\`
+
+### 2. Configurar Google Sheets API
+
+1. Acesse o [Google Cloud Console](https://console.cloud.google.com)
+2. Crie um novo projeto
+3. Ative a Google Sheets API
+4. Crie uma Service Account:
+   - Vá em "IAM & Admin" > "Service Accounts"
+   - Clique em "Create Service Account"
+   - Dê um nome e clique em "Create"
+   - Não precisa adicionar roles, clique em "Continue" e depois "Done"
+5. Crie uma chave JSON:
+   - Clique na service account criada
+   - Vá na aba "Keys"
+   - Clique em "Add Key" > "Create new key"
+   - Escolha JSON e clique em "Create"
+   - O arquivo será baixado automaticamente
+
+### 3. Configurar a Planilha Google Sheets
+
+1. Crie uma nova planilha no Google Sheets
+2. Renomeie a primeira aba para "Sheet1" (ou ajuste no código)
+3. Adicione os cabeçalhos na primeira linha:
+   - A1: timestamp
+   - B1: name
+   - C1: address
+   - D1: instagram
+   - E1: link
+4. Compartilhe a planilha com o email da service account (encontrado no arquivo JSON baixado)
+   - Clique em "Compartilhar"
+   - Cole o email da service account (ex: nome@projeto.iam.gserviceaccount.com)
+   - Dê permissão de "Editor"
+5. Copie o ID da planilha da URL:
+   - URL: https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit
+   - Copie apenas o SPREADSHEET_ID
+
+### 4. Configurar variáveis de ambiente
+
+Crie um arquivo \`.env.local\` na raiz do projeto:
+
+\`\`\`env
+SPREADSHEET_ID=seu_spreadsheet_id_aqui
+GOOGLE_SERVICE_ACCOUNT_EMAIL=seu-email@projeto.iam.gserviceaccount.com
+GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nSua chave privada aqui\n-----END PRIVATE KEY-----\n"
+\`\`\`
+
+**Importante:** A chave privada deve estar entre aspas duplas e manter os \n para quebras de linha.
+
+### 5. Executar o projeto
+
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estrutura do Projeto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- \`/app\` - Páginas e rotas da aplicação
+  - \`/page.tsx\` - Landing page
+  - \`/send-video/page.tsx\` - Página de envio de vídeo
+  - \`/terms/page.tsx\` - Página de termos de uso
+  - \`/api/submit/route.ts\` - API para envio ao Google Sheets
+- \`/components\` - Componentes React
+  - \`/video-submission-form.tsx\` - Formulário de envio
+  - \`/ui\` - Componentes UI do Shadcn
 
-## Learn More
+## Funcionalidades
 
-To learn more about Next.js, take a look at the following resources:
+- Landing page com informações do projeto
+- Formulário de envio com validação
+- Integração com API do IBGE para estados e cidades brasileiras
+- Opção de localização internacional
+- Envio de dados para Google Sheets
+- Notificações toast para feedback do usuário
+- Design responsivo e moderno
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Para fazer deploy na Vercel:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Faça push do código para o GitHub
+2. Importe o projeto na Vercel
+3. Adicione as variáveis de ambiente no painel da Vercel
+4. Deploy!
+\`\`\`
