@@ -129,7 +129,7 @@ export default function TermsPage() {
 
               <div className="pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground">
-                  Ao clicar em "Enviar Vídeo" no formulário, você confirma que leu, compreendeu e concorda com todos os
+                  Ao clicar em &quot;Enviar Vídeo&quot; no formulário, você confirma que leu, compreendeu e concorda com todos os
                   termos e condições acima descritos.
                 </p>
               </div>

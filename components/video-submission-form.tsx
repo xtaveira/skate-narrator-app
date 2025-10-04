@@ -279,7 +279,7 @@ export function VideoSubmissionForm() {
           required
         />
         <p className="text-sm text-muted-foreground">
-          Certifique-se de que o vídeo está com permissão de acesso para "Qualquer pessoa com o link"
+          Certifique-se de que o vídeo está com permissão de acesso para &quot;Qualquer pessoa com o link&quot;
         </p>
       </div>
 
