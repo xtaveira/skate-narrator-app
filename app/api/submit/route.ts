@@ -4,10 +4,10 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, address, instagram, link } = body
+    const { name, address, instagram, stance, link } = body
 
     // Validate required fields
-    if (!name || !address || !instagram || !link) {
+    if (!name || !address || !instagram || !stance || !link) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
@@ -34,12 +34,12 @@ export async function POST(request: Request) {
 
     // Prepare the row data
     const timestamp = new Date().toISOString()
-    const values = [[timestamp, name, address, instagram, link]]
+    const values = [[timestamp, name, address, instagram, stance, link]]
 
     // Append the row to the spreadsheet
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Sheet1!A:E", // Adjust sheet name if needed
+      range: "Sheet1!A:F", // Adjust sheet name if needed
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values,
