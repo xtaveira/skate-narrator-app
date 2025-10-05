@@ -188,6 +188,7 @@ export function VideoSubmissionForm() {
           <li>
             <strong className="font-medium">Proibido:</strong>
             <ul className="list-disc list-inside pl-4 mt-1">
+              <li>Cortes no video</li>
               <li>Marcas d'água no vídeo (nós já vamos colocar seu instagram e pedir colab)</li>
             </ul>
           </li>
