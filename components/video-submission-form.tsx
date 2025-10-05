@@ -10,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
-import { Loader2 } from "lucide-react"
+import { Loader2, AlertTriangle } from "lucide-react"
 
 interface Estado {
   id: number
@@ -41,6 +41,7 @@ export function VideoSubmissionForm() {
   const [internationalLocation, setInternationalLocation] = useState("")
   const [instagram, setInstagram] = useState("")
   const [videoLink, setVideoLink] = useState("")
+  const [stance, setStance] = useState<"regular" | "goofy" | "">("")
 
   // Fetch estados from IBGE API
   useEffect(() => {
@@ -104,6 +105,11 @@ export function VideoSubmissionForm() {
       return
     }
 
+    if (!stance) {
+      alert("Por favor, selecione sua base (Regular ou Goofy)")
+      return
+    }
+
     if (!videoLink.trim()) {
       alert("Por favor, preencha o link do vídeo")
       return
@@ -135,6 +141,7 @@ export function VideoSubmissionForm() {
           name: nomeCompleto,
           address,
           instagram,
+          stance,
           link: videoLink,
         }),
       })
@@ -152,6 +159,7 @@ export function VideoSubmissionForm() {
       setVideoLink("")
       setSelectedEstado("")
       setSelectedCidade("")
+      setStance("")
       setTermsAccepted(false)
     } catch (error) {
       console.error("Error submitting form:", error)
@@ -163,6 +171,35 @@ export function VideoSubmissionForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 bg-card border border-border rounded-lg p-6 md:p-8">
+      {/* Instruction Alert */}
+      <div className="rounded-lg border bg-amber-50 border-amber-200 text-amber-900 p-4">
+        <div className="flex items-center font-semibold mb-2">
+          <AlertTriangle className="h-5 w-5 mr-2" />
+          Instruções para prestar atenção
+        </div>
+        <ul className="space-y-2 text-sm">
+          <li>
+            <strong className="font-medium">Obrigatório:</strong>
+            <ul className="list-disc list-inside pl-4 mt-1 space-y-1">
+              <li>Pelo menos 3 manobras no vídeo</li>
+              <li>Pelo menos 20 segundos de vídeo</li>
+            </ul>
+          </li>
+          <li>
+            <strong className="font-medium">Proibido:</strong>
+            <ul className="list-disc list-inside pl-4 mt-1">
+              <li>Marcas d'água no vídeo (nós já vamos colocar seu instagram e pedir colab)</li>
+            </ul>
+          </li>
+          <li>
+            <strong className="font-medium">Recomendado:</strong>
+            <ul className="list-disc list-inside pl-4 mt-1">
+              <li>Vídeo em 60fps para ficar mais liso</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
       {/* Nome Completo */}
       <div className="space-y-2">
         <Label htmlFor="nome">Nome Completo</Label>
@@ -265,6 +302,20 @@ export function VideoSubmissionForm() {
           onChange={(e) => setInstagram(e.target.value)}
           required
         />
+      </div>
+
+      {/* Stance */}
+      <div className="space-y-2">
+        <Label htmlFor="stance">Base</Label>
+        <Select value={stance} onValueChange={(value) => setStance(value as "regular" | "goofy")}>
+          <SelectTrigger id="stance">
+            <SelectValue placeholder="Selecione sua base" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="regular">Regular (pé esquerdo na frente)</SelectItem>
+            <SelectItem value="goofy">Goofy (pé direito na frente)</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Video Link */}
