@@ -31,7 +31,7 @@ export default function SendVideoPage() {
             <div className="space-y-3 text-center">
               <h2 className="text-4xl font-bold tracking-tight">Envie Seu Vídeo</h2>
               <p className="text-lg text-muted-foreground text-pretty">
-                Preencha o formulário abaixo para enviar seu vídeo de skate e receber uma narração profissional
+                Preencha o formulário abaixo para enviar o video da sua linha
               </p>
             </div>
 
