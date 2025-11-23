@@ -28,6 +28,7 @@ export function VideoSubmissionForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [locationType, setLocationType] = useState<"brasil" | "internacional">("brasil")
   const [termsAccepted, setTermsAccepted] = useState(false)
+  const [showUnderageAlert, setShowUnderageAlert] = useState(false)
 
   // Brazil location states
   const [estados, setEstados] = useState<Estado[]>([])
@@ -45,6 +46,29 @@ export function VideoSubmissionForm() {
   const [tiktok, setTiktok] = useState("")
   const [videoLink, setVideoLink] = useState("")
   const [stance, setStance] = useState<"regular" | "goofy" | "">("")
+
+  // Debounce for underage alert
+  useEffect(() => {
+    const ageNum = Number(idade)
+    const isUnderage = ageNum > 0 && ageNum < 18
+
+    // Immediate hide if not underage
+    if (!isUnderage) {
+      setShowUnderageAlert(false)
+    }
+
+    // Set a timer to show the alert after 2s if underage
+    const handler = setTimeout(() => {
+      if (isUnderage) {
+        setShowUnderageAlert(true)
+      }
+    }, 2000)
+
+    // Cleanup function to cancel the timer
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [idade])
 
   // Fetch estados from IBGE API
   useEffect(() => {
@@ -235,6 +259,13 @@ export function VideoSubmissionForm() {
           required
         />
       </div>
+
+      {/* Underage Alert */}
+      {showUnderageAlert && (
+        <AlertInstructions title="Menor de idade">
+          <p className="text-sm">Preciso confirmar com um responsável se podemos postar o video narrado.</p>
+        </AlertInstructions>
+      )}
 
       {/* Localização Type */}
       <div className="space-y-3">
