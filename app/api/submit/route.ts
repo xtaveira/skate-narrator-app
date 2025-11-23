@@ -4,11 +4,16 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, idade, address, instagram, tiktok, stance, link } = body
+    const { name, idade, address, instagram, tiktok, stance, link, guardianName, guardianPhone } = body
 
-    // Validate required fields
+    // Basic validation
     if (!name || !idade || !address || !instagram || !stance || !link) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    }
+
+    // Conditional validation for underage
+    if (Number(idade) < 18 && (!guardianName || !guardianPhone)) {
+      return NextResponse.json({ error: "Guardian details are required for minors" }, { status: 400 })
     }
 
     // Get environment variables
@@ -34,12 +39,23 @@ export async function POST(request: Request) {
 
     // Prepare the row data
     const timestamp = new Date().toISOString()
-    const values = [[timestamp, name, address, instagram, tiktok || "", stance, idade, link]]
+    const values = [[
+      timestamp,
+      name,
+      address,
+      instagram,
+      tiktok || "",
+      stance,
+      idade,
+      link,
+      guardianName || "",
+      guardianPhone || ""
+    ]]
 
     // Append the row to the spreadsheet
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Sheet1!A:H", // Adjust sheet name if needed
+      range: "Sheet1!A:J", // Updated range
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values,
@@ -48,7 +64,11 @@ export async function POST(request: Request) {
 
     // Send notification after successful submission
     try {
-      const notificationMessage = `🛹 Novo vídeo para narração!\n\nNome: ${name}\nIdade: ${idade}\nInstagram: ${instagram}\nTikTok: ${tiktok || "Não informado"}\nBase: ${stance}\nLocal: ${address}\nLink: ${link}`;
+      let notificationMessage = `🛹 Novo vídeo para narração!\n\nNome: ${name}\nIdade: ${idade}\nInstagram: ${instagram}\nTikTok: ${tiktok || "Não informado"}\nBase: ${stance}\nLocal: ${address}\nLink: ${link}`;
+
+      if (guardianName) {
+        notificationMessage += `\n\n--- Dados do Responsável ---\nNome: ${guardianName}\nCelular: ${guardianPhone}`;
+      }
 
       const apiUrl = process.env.API_URL;
       const apiKey = process.env.API_KEY;
