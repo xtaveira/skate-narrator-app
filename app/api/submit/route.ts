@@ -11,7 +11,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    // ... (env var and auth setup remains the same) ...
+    // Get environment variables
+    const spreadsheetId = process.env.SPREADSHEET_ID
+    const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
+    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n")
+
+    if (!spreadsheetId || !clientEmail || !privateKey) {
+      console.error("Missing environment variables")
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 })
+    }
+
+    // Setup Google Sheets API authentication
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: clientEmail,
+        private_key: privateKey,
+      },
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    })
+
+    const sheets = google.sheets({ version: "v4", auth })
 
     // Prepare the row data
     const timestamp = new Date().toISOString()
