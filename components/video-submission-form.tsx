@@ -39,7 +39,8 @@ export function VideoSubmissionForm() {
   // Form fields
   const [nomeCompleto, setNomeCompleto] = useState("")
   const [internationalLocation, setInternationalLocation] = useState("")
-  const [instagram, setInstagram] = useState("")
+    const [instagram, setInstagram] = useState("")
+  const [tiktok, setTiktok] = useState("")
   const [videoLink, setVideoLink] = useState("")
   const [stance, setStance] = useState<"regular" | "goofy" | "">("")
 
@@ -141,6 +142,7 @@ export function VideoSubmissionForm() {
           name: nomeCompleto,
           address,
           instagram,
+          tiktok,
           stance,
           link: videoLink,
         }),
@@ -156,6 +158,7 @@ export function VideoSubmissionForm() {
       setNomeCompleto("")
       setInternationalLocation("")
       setInstagram("")
+      setTiktok("")
       setVideoLink("")
       setSelectedEstado("")
       setSelectedCidade("")
@@ -302,6 +305,18 @@ export function VideoSubmissionForm() {
           value={instagram}
           onChange={(e) => setInstagram(e.target.value)}
           required
+        />
+      </div>
+
+      {/* TikTok */}
+      <div className="space-y-2">
+        <Label htmlFor="tiktok">@ do Tiktok (opcional)</Label>
+        <Input
+          id="tiktok"
+          type="text"
+          placeholder="@seuperfil"
+          value={tiktok}
+          onChange={(e) => setTiktok(e.target.value)}
         />
       </div>
 

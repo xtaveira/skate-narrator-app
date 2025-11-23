@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, address, instagram, stance, link } = body
+    const { name, address, instagram, tiktok, stance, link } = body
 
     // Validate required fields
     if (!name || !address || !instagram || !stance || !link) {
@@ -34,12 +34,12 @@ export async function POST(request: Request) {
 
     // Prepare the row data
     const timestamp = new Date().toISOString()
-    const values = [[timestamp, name, address, instagram, stance, link]]
+    const values = [[timestamp, name, address, instagram, tiktok || "", stance, link]]
 
     // Append the row to the spreadsheet
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Sheet1!A:F", // Adjust sheet name if needed
+      range: "Sheet1!A:G", // Adjust sheet name if needed
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values,
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
 
     // Send notification after successful submission
     try {
-      const notificationMessage = `🛹 Novo vídeo para narração!\n\nNome: ${name}\nInstagram: ${instagram}\nBase: ${stance}\nLocal: ${address}\nLink: ${link}`;
+      const notificationMessage = `🛹 Novo vídeo para narração!\n\nNome: ${name}\nInstagram: ${instagram}\nTikTok: ${tiktok || "Não informado"}\nBase: ${stance}\nLocal: ${address}\nLink: ${link}`;
 
       const apiUrl = process.env.API_URL;
       const apiKey = process.env.API_KEY;
