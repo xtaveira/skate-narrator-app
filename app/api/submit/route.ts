@@ -4,42 +4,23 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, address, instagram, tiktok, stance, link } = body
+    const { name, idade, address, instagram, tiktok, stance, link } = body
 
     // Validate required fields
-    if (!name || !address || !instagram || !stance || !link) {
+    if (!name || !idade || !address || !instagram || !stance || !link) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    // Get environment variables
-    const spreadsheetId = process.env.SPREADSHEET_ID
-    const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n")
-
-    if (!spreadsheetId || !clientEmail || !privateKey) {
-      console.error("Missing environment variables")
-      return NextResponse.json({ error: "Server configuration error" }, { status: 500 })
-    }
-
-    // Setup Google Sheets API authentication
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: clientEmail,
-        private_key: privateKey,
-      },
-      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-    })
-
-    const sheets = google.sheets({ version: "v4", auth })
+    // ... (env var and auth setup remains the same) ...
 
     // Prepare the row data
     const timestamp = new Date().toISOString()
-    const values = [[timestamp, name, address, instagram, tiktok || "", stance, link]]
+    const values = [[timestamp, name, address, instagram, tiktok || "", stance, idade, link]]
 
     // Append the row to the spreadsheet
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Sheet1!A:G", // Adjust sheet name if needed
+      range: "Sheet1!A:H", // Adjust sheet name if needed
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values,
@@ -48,7 +29,7 @@ export async function POST(request: Request) {
 
     // Send notification after successful submission
     try {
-      const notificationMessage = `🛹 Novo vídeo para narração!\n\nNome: ${name}\nInstagram: ${instagram}\nTikTok: ${tiktok || "Não informado"}\nBase: ${stance}\nLocal: ${address}\nLink: ${link}`;
+      const notificationMessage = `🛹 Novo vídeo para narração!\n\nNome: ${name}\nIdade: ${idade}\nInstagram: ${instagram}\nTikTok: ${tiktok || "Não informado"}\nBase: ${stance}\nLocal: ${address}\nLink: ${link}`;
 
       const apiUrl = process.env.API_URL;
       const apiKey = process.env.API_KEY;

@@ -37,7 +37,8 @@ export function VideoSubmissionForm() {
   const [loadingCidades, setLoadingCidades] = useState(false)
 
   // Form fields
-  const [nomeCompleto, setNomeCompleto] = useState("")
+    const [nomeCompleto, setNomeCompleto] = useState("")
+  const [idade, setIdade] = useState("")
   const [internationalLocation, setInternationalLocation] = useState("")
     const [instagram, setInstagram] = useState("")
   const [tiktok, setTiktok] = useState("")
@@ -91,6 +92,12 @@ export function VideoSubmissionForm() {
       return
     }
 
+    const ageNum = Number(idade)
+    if (!idade || !Number.isInteger(ageNum) || ageNum < 2 || ageNum > 130) {
+      alert("Por favor, preencha uma idade válida (entre 2 e 130 anos)")
+      return
+    }
+
     if (locationType === "brasil" && (!selectedEstado || !selectedCidade)) {
       alert("Por favor, selecione estado e cidade")
       return
@@ -140,6 +147,7 @@ export function VideoSubmissionForm() {
         },
         body: JSON.stringify({
           name: nomeCompleto,
+          idade: ageNum,
           address,
           instagram,
           tiktok,
@@ -156,6 +164,7 @@ export function VideoSubmissionForm() {
 
       // Reset form
       setNomeCompleto("")
+      setIdade("")
       setInternationalLocation("")
       setInstagram("")
       setTiktok("")
@@ -213,6 +222,19 @@ export function VideoSubmissionForm() {
           placeholder="Seu nome completo"
           value={nomeCompleto}
           onChange={(e) => setNomeCompleto(e.target.value)}
+          required
+        />
+      </div>
+
+      {/* Idade */}
+      <div className="space-y-2">
+        <Label htmlFor="idade">Idade</Label>
+        <Input
+          id="idade"
+          type="number"
+          placeholder="Sua idade"
+          value={idade}
+          onChange={(e) => setIdade(e.target.value)}
           required
         />
       </div>
