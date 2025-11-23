@@ -55,8 +55,8 @@ export default function HomePage() {
             {/* Features Grid */}
             <div className="grid md:grid-cols-3 gap-6 pt-16">
               <div className="p-6 rounded-lg bg-card border border-border space-y-3">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Video className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center mx-auto">
+                  <Video className="w-6 h-6 text-primary-foreground" />
                 </div>
                 <h3 className="text-lg font-semibold">Envie seu vídeo</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -65,8 +65,8 @@ export default function HomePage() {
               </div>
 
               <div className="p-6 rounded-lg bg-card border border-border space-y-3">
-                <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center">
-                  <Mic2 className="w-6 h-6 text-secondary" />
+                <div className="w-12 h-12 rounded-lg bg-secondary flex items-center justify-center mx-auto">
+                  <Mic2 className="w-6 h-6 text-secondary-foreground" />
                 </div>
                 <h3 className="text-lg font-semibold">Receba narração</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -75,8 +75,8 @@ export default function HomePage() {
               </div>
 
               <div className="p-6 rounded-lg bg-card border border-border space-y-3">
-                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-accent" />
+                <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center mx-auto">
+                  <Sparkles className="w-6 h-6 text-accent-foreground" />
                 </div>
                 <h3 className="text-lg font-semibold">Compartilhe</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
