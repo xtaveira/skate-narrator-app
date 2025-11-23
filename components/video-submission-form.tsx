@@ -10,7 +10,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
-import { Loader2, AlertTriangle } from "lucide-react"
+import { Loader2 } from "lucide-react"
+import { AlertInstructions } from "@/components/ui/alert-instructions"
 
 interface Estado {
   id: number
@@ -37,10 +38,10 @@ export function VideoSubmissionForm() {
   const [loadingCidades, setLoadingCidades] = useState(false)
 
   // Form fields
-    const [nomeCompleto, setNomeCompleto] = useState("")
+  const [nomeCompleto, setNomeCompleto] = useState("")
   const [idade, setIdade] = useState("")
   const [internationalLocation, setInternationalLocation] = useState("")
-    const [instagram, setInstagram] = useState("")
+  const [instagram, setInstagram] = useState("")
   const [tiktok, setTiktok] = useState("")
   const [videoLink, setVideoLink] = useState("")
   const [stance, setStance] = useState<"regular" | "goofy" | "">("")
@@ -184,11 +185,7 @@ export function VideoSubmissionForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 bg-card border border-border rounded-lg p-6 md:p-8">
       {/* Instruction Alert */}
-      <div className="rounded-lg border bg-amber-50 border-amber-200 text-amber-900 p-4">
-        <div className="flex items-center font-semibold mb-2">
-          <AlertTriangle className="h-5 w-5 mr-2" />
-          Instruções para prestar atenção
-        </div>
+      <AlertInstructions title="Instruções para prestar atenção">
         <ul className="space-y-2 text-sm">
           <li>
             <strong className="font-medium">Obrigatório:</strong>
@@ -211,7 +208,7 @@ export function VideoSubmissionForm() {
             </ul>
           </li>
         </ul>
-      </div>
+      </AlertInstructions>
 
       {/* Nome Completo */}
       <div className="space-y-2">
