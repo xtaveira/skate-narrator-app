@@ -1,5 +1,6 @@
 import { google } from "googleapis"
 import { NextResponse } from "next/server"
+import { sendTelegramLog } from "@/lib/telegram"
 
 export async function POST(request: Request) {
   try {
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
     const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n")
 
     if (!spreadsheetId || !clientEmail || !privateKey) {
-      console.error("Missing environment variables")
+      console.error("Missing environment variables for Google Sheets")
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 })
     }
 
@@ -62,39 +63,39 @@ export async function POST(request: Request) {
       },
     })
 
-    // Send notification after successful submission
-    try {
-      let notificationMessage = `🛹 Novo vídeo para narração!\n\nNome: ${name}\nIdade: ${idade}\nInstagram: ${instagram}\nTikTok: ${tiktok || "Não informado"}\nBase: ${stance}\nLocal: ${address}\nLink: ${link}`;
+    // Send notification after successful submission using the new logger
+    const tiktokMessage = tiktok ? `\n*TikTok:* 
+${tiktok}
+` : ""
+    let notificationMessage = `🛹 *Novo vídeo para narração!* 🛹\n\n*Nome:* 
+${name}
+*Idade:* 
+${idade}
+*Instagram:* 
+${instagram}${tiktokMessage}*Base:* 
+${stance}
+*Local:* 
+${address}\n\n*Link:* [Abrir Vídeo](${link})`
 
-      if (guardianName) {
-        notificationMessage += `\n\n--- Dados do Responsável ---\nNome: ${guardianName}\nCelular: ${guardianPhone}`;
-      }
-
-      const apiUrl = process.env.API_URL;
-      const apiKey = process.env.API_KEY;
-      const chatId = process.env.CHAT_ID;
-
-      if (apiUrl && apiKey && chatId) {
-        await fetch(`${apiUrl}/send_message`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-Key": apiKey,
-          },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: notificationMessage,
-          }),
-        });
-      }
-    } catch (notificationError) {
-      console.error("Failed to send notification:", notificationError);
-      // Do not block the main response if notification fails
+    if (guardianName) {
+      notificationMessage += `\n\n--- _Dados do Responsável_ ---
+*Nome:* 
+${guardianName}
+*Celular:* 
+${guardianPhone}`
     }
+    
+    await sendTelegramLog(notificationMessage)
 
     return NextResponse.json({ success: true, message: "Video submission recorded successfully" });
   } catch (error) {
-    console.error("Error submitting to Google Sheets:", error)
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
+    console.error("Error in POST /api/submit:", errorMessage)
+    
+    // Also send an error log to Telegram
+    await sendTelegramLog(`🔥 *Erro na API /api/submit* 🔥\n\nOcorreu um erro ao processar uma submissão.\n\n*Detalhe:* 
+${errorMessage}`)
+
     return NextResponse.json({ error: "Failed to submit video" }, { status: 500 })
   }
 }
