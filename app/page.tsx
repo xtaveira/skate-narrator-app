@@ -1,7 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Video, Mic2, Sparkles } from "lucide-react"
+import { ArrowRight, Video, Mic2, Sparkles, Instagram, Youtube, Facebook, Film } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function HomePage() {
   return (
@@ -90,7 +91,63 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="border-t border-border">
-        <div className="container mx-auto px-4 py-6">
+        <div className="container mx-auto px-4 py-6 flex flex-col items-center gap-4">
+          <div className="flex items-center gap-4">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button asChild variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Link href="https://www.instagram.com/narradordoskate/" target="_blank" aria-label="Instagram">
+                      <Instagram className="w-5 h-5" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Instagram</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button asChild variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Link href="https://www.tiktok.com/@narradordoskate" target="_blank" aria-label="TikTok">
+                      <Film className="w-5 h-5" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>TikTok</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button asChild variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Link href="https://www.youtube.com/@NarradorDoSkate" target="_blank" aria-label="YouTube">
+                      <Youtube className="w-5 h-5" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>YouTube</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button asChild variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Link href="https://www.facebook.com/people/Narrador-do-Skate/61584202648750/" target="_blank" aria-label="Facebook">
+                      <Facebook className="w-5 h-5" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Facebook</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+
           <p className="text-center text-sm text-muted-foreground">
             © 2025 Narrador do Skate. Todos os direitos reservados.
           </p>
