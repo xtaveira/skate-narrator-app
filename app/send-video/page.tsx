@@ -1,7 +1,7 @@
-import { VideoSubmissionForm } from "@/components/video-submission-form"
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { VideoSubmissionForm } from "@/components/video-submission-form";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function SendVideoPage() {
   return (
@@ -17,7 +17,12 @@ export default function SendVideoPage() {
             Voltar
           </Link>
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/narrador-do-skate-logo.png" alt="Logo Narrador do Skate" width={40} height={40} />
+            <Image
+              src="/LOGO-SEM-FUNDO.png"
+              alt="Logo Narrador do Skate"
+              width={40}
+              height={40}
+            />
           </Link>
           <div className="w-20" /> {/* Spacer for centering */}
         </div>
@@ -29,7 +34,9 @@ export default function SendVideoPage() {
           <div className="max-w-2xl mx-auto space-y-8">
             {/* Page Title */}
             <div className="space-y-3 text-center">
-              <h2 className="text-4xl font-bold tracking-tight">Envie Seu Vídeo</h2>
+              <h2 className="text-4xl font-bold tracking-tight">
+                Envie Seu Vídeo
+              </h2>
               <p className="text-lg text-muted-foreground text-pretty">
                 Preencha o formulário abaixo para enviar o video da sua linha
               </p>
@@ -50,5 +57,5 @@ export default function SendVideoPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

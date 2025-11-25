@@ -11,7 +11,7 @@ export default function HomePage() {
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/narrador-do-skate-logo.png" alt="Logo Narrador do Skate" width={40} height={40} />
+            <Image src="/LOGO-SEM-FUNDO.png" alt="Logo Narrador do Skate" width={40} height={40} />
           </Link>
           <nav className="flex items-center gap-6">
             <Link href="/send-video" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
